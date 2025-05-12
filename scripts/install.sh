@@ -203,10 +203,6 @@ EOT
     return 0
 }
 
-# Fetch the latest release information from GitHub
-fetch_latest_release() {
-    curl -s "https://api.github.com/repos/$REPO_OWNER/$REPO_SLUG/releases/latest"
-}
 
 # Get the download URL for the appropriate asset
 get_download_url() {
@@ -217,16 +213,16 @@ get_download_url() {
     case $os in
         macos)
             if [ "$arch" == "silicon" ]; then
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/latest/download/aios-cli-aarch64-apple-darwin.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-aarch64-apple-darwin.tar.gz"
             else
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/latest/download/aios-cli-x86_64-apple-darwin.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-x86_64-apple-darwin.tar.gz"
             fi
             ;;
         linux|ubuntu|debian|pop)
             if [ "$arch" == "cuda" ]; then
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/latest/download/aios-cli-x86_64-unknown-linux-gnu-cuda.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-x86_64-unknown-linux-gnu-cuda.tar.gz"
             else
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/latest/download/aios-cli-x86_64-unknown-linux-gnu.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-x86_64-unknown-linux-gnu.tar.gz"
             fi
             ;;
         *)
@@ -370,21 +366,6 @@ main() {
         echo_and_log "ERROR" "Unsupported operating system."
         exit 1
     fi
-
-
-    echo_and_log "INFO" "Fetching latest release..."
-    RELEASE_DATA=$(fetch_latest_release)
-    if [ -z "$RELEASE_DATA" ]; then
-        echo_and_log "ERROR" "Failed to fetch release data."
-        exit 1
-    fi
-
-    VERSION=$(echo "$RELEASE_DATA" | grep -o '"tag_name": *"[^"]*"' | sed -E 's/"tag_name": "(.*)"/\1/')
-    if [ -z "$VERSION" ]; then
-        echo_and_log "ERROR" "Failed to parse version from release data."
-        exit 1
-    fi
-    echo_and_log "LOG" "Latest version: {{INFO}}$VERSION{{NC}}"
 
     case $OS in
         macos)
