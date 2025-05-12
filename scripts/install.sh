@@ -213,16 +213,16 @@ get_download_url() {
     case $os in
         macos)
             if [ "$arch" == "silicon" ]; then
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-aarch64-apple-darwin.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/download/v0.1.6/aios-cli-aarch64-apple-darwin.tar.gz"
             else
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-x86_64-apple-darwin.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/download/v0.1.6/aios-cli-x86_64-apple-darwin.tar.gz"
             fi
             ;;
         linux|ubuntu|debian|pop)
             if [ "$arch" == "cuda" ]; then
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-x86_64-unknown-linux-gnu-cuda.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/download/v0.1.6//aios-cli-x86_64-unknown-linux-gnu-cuda.tar.gz"
             else
-                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/v0.1.6/download/aios-cli-x86_64-unknown-linux-gnu.tar.gz"
+                url="https://github.com/$REPO_OWNER/$REPO_SLUG/releases/download/v0.1.6//aios-cli-x86_64-unknown-linux-gnu.tar.gz"
             fi
             ;;
         *)
